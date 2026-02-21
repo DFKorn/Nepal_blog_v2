@@ -16,6 +16,7 @@ export const getSubredditPosts = async (subreddit = "EarthPorn") => {
       throw new Error(`HTTP error: ${response.status}`);
     }
     const jsonResponse = await response.json();
+    console.log(jsonResponse);
     return jsonResponse.data.children.map((post) => post.data);
   } catch (error) {
     console.log(error);

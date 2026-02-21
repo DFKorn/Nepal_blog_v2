@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "ES2022", // Современный JavaScript [1]
+    "useDefineForClassFields": true,
+    "lib": ["DOM", "DOM.Iterable", "ESNext"], // Поддержка браузерных API [6]
+    "skipLibCheck": true, // Пропускать проверку типов библиотек [7]
+    "esModuleInterop": true, // Совместимость CommonJS и ES модулей [7]
+    "allowSyntheticDefaultImports": true,
+    "strict": true, // Строгая типизация [1]
+    "forceConsistentCasingInFileNames": true,
+    "module": "ESNext", // Современные модули
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true, // Не генерировать файлы (vite делает это сам)
+    "jsx": "react-jsx", // Поддержка JSX/TSX [1]
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"] // Алиасы путей
+    }
+  },
+  "include": ["src"], // Сканировать папку src
+  "exclude": ["node_modules"]
+}
