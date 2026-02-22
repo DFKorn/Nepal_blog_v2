@@ -15,9 +15,12 @@ interface SubredditsState {
   selectedSubredditID: string;
 }
 
+const STORAGE_KEY = "selected_subreddit_id";
+
 const initialState: SubredditsState = {
   subreddits: subredditsList,
-  selectedSubredditID: subredditsList[0].id,
+  selectedSubredditID:
+    sessionStorage.getItem(STORAGE_KEY) || subredditsList[0].id,
 };
 
 const subredditsSlice = createSlice({
