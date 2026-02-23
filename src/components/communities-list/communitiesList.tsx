@@ -2,14 +2,15 @@ import React from "react";
 import "./communitiesList.css";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { setSelectedSubreddit } from "../../state/subreddits/subredditsSlice";
+import { selectAllSubreddits } from "../../state/subreddits/subredditSelectors";
 
 const CommunitiesList = ({ closeDropdown }: { closeDropdown: () => void }) => {
   const dispatch = useAppDispatch();
-  const subreddits = useAppSelector((state) => state.subreddits.subreddits);
+  const subreddits = useAppSelector(selectAllSubreddits);
 
   const handleSelect = (id: string) => {
     dispatch(setSelectedSubreddit(id));
-    closeDropdown(); // Закрываем меню после выбора
+    closeDropdown(); // close dropdown after selection
   };
 
   return (

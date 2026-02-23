@@ -10,7 +10,7 @@ import { useAppSelector } from "../../hooks/hooks";
 import { selectActiveSubreddit } from "../../state/subreddits/subredditSelectors";
 
 const Main = () => {
-  // Нам нужен только активный сабреддит, чтобы загрузить посты
+  // we only need the active subreddit to load posts
   const activeSubreddit = useAppSelector(selectActiveSubreddit);
 
   // RTK Query сам следит за изменением activeSubreddit.url

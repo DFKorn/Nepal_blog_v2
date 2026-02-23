@@ -30,7 +30,6 @@ const CommunitiyNavigator = () => {
 
           {dropVisible && (
             <div className="dropdown">
-              {/* Передаем только функцию закрытия, список возьмем внутри */}
               <CommunitiesList closeDropdown={() => setDropVisible(false)} />
             </div>
           )}
