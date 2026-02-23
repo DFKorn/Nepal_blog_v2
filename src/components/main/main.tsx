@@ -1,6 +1,4 @@
 import "./main.css";
-import React, { useEffect, useMemo, useState } from "react";
-
 import "react-loading-skeleton/dist/skeleton.css";
 import Post from "../post/post";
 import CommunitiyNavigator from "../community-nav/communityNavigator";
@@ -14,26 +12,31 @@ const Main = () => {
   // we only need the active subreddit to load posts
   const activeSubreddit = useAppSelector(selectActiveSubreddit);
 
-  // RTK Query сам следит за изменением activeSubreddit.url
+  // RTK Query looks after activeSubreddit.title changes and automatically refetches posts for the new subreddit
   const {
     data: posts = [],
     isLoading,
     isError,
   } = useGetPostsBySubredditQuery(activeSubreddit.title);
 
-  console.log("Active subreddit:", activeSubreddit, "Posts:", posts);
-
   return (
     <main>
       <CommunitiyNavigator />
 
-      {isLoading ? (
-        <p>Loading...</p>
-      ) : (
-        posts.map((post, index) => (
-          <Post key={post.id} post={post} index={index} />
-        ))
+      {isLoading && <PostLoading />}
+      {isError && (
+        <div style={{ textAlign: "center" }}>
+          <h3>Whoops</h3>
+          <p>
+            Sorry, something went wrong with our blog. Try to select another
+            community or check back later!
+          </p>
+        </div>
       )}
+
+      {posts.map((post, index) => (
+        <Post key={post.id} post={post} index={index} />
+      ))}
 
       <div className="more-wrapper">
         <a
