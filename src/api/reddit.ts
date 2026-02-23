@@ -1,23 +1,10 @@
+import { RedditPost } from "@/types";
+
 interface PostListResponse {
   data: {
     children: Array<{
       kind: string;
       data: RedditPost;
-    }>;
-  };
-}
-
-interface RedditPost {
-  title: string;
-  url: string;
-  author: string;
-  created_utc: number;
-  ups: number;
-  preview?: {
-    images: Array<{
-      source: {
-        url: string;
-      };
     }>;
   };
 }
@@ -40,6 +27,7 @@ export const getSubredditPosts = async (subreddit = "EarthPorn") => {
       throw new Error(`HTTP error: ${response.status}`);
     }
     const jsonResponse: PostListResponse = await response.json();
+    console.log(jsonResponse);
     return jsonResponse.data.children.map((post) => post.data as RedditPost);
   } catch (error) {
     console.log(error);
