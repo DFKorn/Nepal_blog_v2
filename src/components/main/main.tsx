@@ -8,25 +8,32 @@ import PostLoading from "../post/postLoading";
 
 import { useAppSelector } from "../../hooks/hooks";
 import { selectActiveSubreddit } from "../../state/subreddits/subredditSelectors";
+import { useGetPostsBySubredditQuery } from "../../state/posts/redditApiSlice";
 
 const Main = () => {
   // we only need the active subreddit to load posts
   const activeSubreddit = useAppSelector(selectActiveSubreddit);
 
   // RTK Query сам следит за изменением activeSubreddit.url
-  //const { data: posts = [], isLoading } = useGetPostsBySubredditQuery(activeSubreddit.url);
+  const {
+    data: posts = [],
+    isLoading,
+    isError,
+  } = useGetPostsBySubredditQuery(activeSubreddit.title);
+
+  console.log("Active subreddit:", activeSubreddit, "Posts:", posts);
 
   return (
     <main>
       <CommunitiyNavigator />
 
-      {/* {isLoading ? (
+      {isLoading ? (
         <p>Loading...</p>
       ) : (
         posts.map((post, index) => (
           <Post key={post.id} post={post} index={index} />
         ))
-      )} */}
+      )}
 
       <div className="more-wrapper">
         <a

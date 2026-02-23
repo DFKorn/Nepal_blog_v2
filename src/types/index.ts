@@ -1,3 +1,12 @@
+export interface Subreddit {
+  title: string;
+  id: string;
+  url: string;
+  color: string;
+  iconURL: string;
+  softName: string;
+}
+
 export interface RedditPost {
   id: string;
   title: string;
@@ -15,6 +24,15 @@ export interface RedditPost {
   preview?: {
     images: Array<{
       resolutions: Array<{ url: string; width: number; height: number }>;
+    }>;
+  };
+}
+
+export interface RedditResponse {
+  data: {
+    children: Array<{
+      kind: string;
+      data: RedditPost;
     }>;
   };
 }

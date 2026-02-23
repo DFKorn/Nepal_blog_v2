@@ -1,14 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { subredditsList } from "../../api/reddit";
-
-interface Subreddit {
-  title: string;
-  id: string;
-  url: string;
-  color: string;
-  iconURL: string;
-  softName: string;
-}
+import { Subreddit } from "@/types";
 
 interface SubredditsState {
   subreddits: Subreddit[];
