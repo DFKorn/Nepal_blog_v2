@@ -3,7 +3,13 @@ import { RedditPost, RedditResponse } from "@/types";
 
 export const redditApi = createApi({
   reducerPath: "redditApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "https://www.reddit.com" }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: "https://www.reddit.com",
+    prepareHeaders: (headers) => {
+      headers.set("Accept", "application/json");
+      return headers;
+    },
+  }),
   endpoints: (builder) => ({
     getPostsBySubreddit: builder.query<RedditPost[], string>({
       // use subreddit url for query
