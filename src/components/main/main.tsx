@@ -19,6 +19,8 @@ const Main = () => {
     isError,
   } = useGetPostsBySubredditQuery(activeSubreddit.title);
 
+  console.log("Posts in Main:", posts);
+
   return (
     <main>
       <CommunitiyNavigator />

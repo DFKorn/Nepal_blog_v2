@@ -1,6 +1,7 @@
 import "./post.css";
 import moment from "moment";
-import { FaUserCircle } from "react-icons/fa";
+import React, { useState } from "react";
+import { FaChevronLeft, FaChevronRight, FaUserCircle } from "react-icons/fa";
 import { RedditPost } from "@/types";
 
 interface PostProps {
@@ -14,12 +15,40 @@ const USER_BASE = "https://www.reddit.com/user/";
 const transformUrl = (url: string) => url.replaceAll("amp;", "");
 
 const Post = ({ post, index }: PostProps) => {
+  const [currentImgIndex, setCurrentImgIndex] = useState(0);
+
   if (!post) return <h2>Something went wrong...</h2>;
 
   const resolutions = post.preview?.images?.[0]?.resolutions;
 
   // content definition logic: if post is video and has reddit_video media, then it's a video post
   const isVideo = post.is_video && post.media?.reddit_video;
+  const isGallery = post.is_gallery && post.gallery_data && post.media_metadata;
+
+  // 2. gallery data preparation
+  const galleryItems = isGallery
+    ? post.gallery_data!.items.map((item) => {
+        const metadata = post.media_metadata![item.media_id];
+        // take 4th resolution for gallery preview, if there are less than 4, take the highest available
+        const url = metadata.p?.[4]?.u || metadata.s.u;
+        return { url: transformUrl(url), caption: item.caption };
+      })
+    : [];
+
+  const nextPhoto = (e: React.MouseEvent) => {
+    e.preventDefault(); // prevent link navigation
+    setCurrentImgIndex((prev) =>
+      prev + 1 === galleryItems.length ? 0 : prev + 1,
+    );
+  };
+
+  const prevPhoto = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setCurrentImgIndex((prev) =>
+      prev === 0 ? galleryItems.length - 1 : prev - 1,
+    );
+  };
+
   const videoUrl = post.media?.reddit_video?.fallback_url;
 
   const generateSrcSet = () => {
@@ -67,6 +96,36 @@ const Post = ({ post, index }: PostProps) => {
                   <source src={transformUrl(videoUrl!)} type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
+              </div>
+            ) : isGallery ? (
+              /* Gallery render */
+              <div className="gallery-wrapper">
+                <img
+                  src={galleryItems[currentImgIndex].url}
+                  alt=""
+                  className="post-image"
+                />
+                {galleryItems.length > 1 && (
+                  <>
+                    <button
+                      className="gallery-nav prev"
+                      onClick={prevPhoto}
+                      aria-label="Previous"
+                    >
+                      <FaChevronLeft />
+                    </button>
+                    <button
+                      className="gallery-nav next"
+                      onClick={nextPhoto}
+                      aria-label="Next"
+                    >
+                      <FaChevronRight />
+                    </button>
+                    <div className="gallery-counter">
+                      {currentImgIndex + 1} / {galleryItems.length}
+                    </div>
+                  </>
+                )}
               </div>
             ) : (
               /* render image */

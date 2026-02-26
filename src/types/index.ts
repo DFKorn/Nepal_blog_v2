@@ -26,6 +26,17 @@ export interface RedditPost {
       resolutions: Array<{ url: string; width: number; height: number }>;
     }>;
   };
+  is_gallery?: boolean;
+  gallery_data?: {
+    items: Array<{ media_id: string; caption?: string }>;
+  };
+  media_metadata?: Record<
+    string,
+    {
+      s: { u: string }; // Source
+      p: Array<{ u: string; x: number; y: number }>; // Previews
+    }
+  >;
 }
 
 export interface RedditResponse {
