@@ -1,6 +1,6 @@
 import "./post.css";
 import moment from "moment";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { FaChevronLeft, FaChevronRight, FaUserCircle } from "react-icons/fa";
 import { RedditPost } from "@/types";
 
@@ -25,15 +25,39 @@ const Post = ({ post, index }: PostProps) => {
   const isVideo = post.is_video && post.media?.reddit_video;
   const isGallery = post.is_gallery && post.gallery_data && post.media_metadata;
 
-  // 2. gallery data preparation
-  const galleryItems = isGallery
-    ? post.gallery_data!.items.map((item) => {
-        const metadata = post.media_metadata![item.media_id];
-        // take 4th resolution for gallery preview, if there are less than 4, take the highest available
-        const url = metadata.p?.[4]?.u || metadata.s.u;
-        return { url: transformUrl(url), caption: item.caption };
-      })
-    : [];
+  const { galleryItems, stableAspectRatio } = useMemo(() => {
+    if (!post.is_gallery || !post.gallery_data || !post.media_metadata) {
+      return { galleryItems: [], stableAspectRatio: "16 / 9" };
+    }
+
+    let maxRatio = 0;
+    let tWidth = 16;
+    let tHeight = 9;
+
+    const items = post.gallery_data.items.map((item) => {
+      const metadata = post.media_metadata![item.media_id];
+      const { s: source, p: previews } = metadata;
+
+      // 1. Расчет аспект ратио (ищем самую "высокую" картинку)
+      const ratio = source.y / source.x;
+      if (ratio > maxRatio) {
+        maxRatio = ratio;
+        tWidth = source.x;
+        tHeight = source.y;
+      }
+
+      // 2. Сразу формируем объект для галереи
+      return {
+        url: transformUrl(previews?.[4]?.u || source.u),
+        caption: item.caption,
+      };
+    });
+
+    return {
+      galleryItems: items,
+      stableAspectRatio: `${tWidth} / ${tHeight}`,
+    };
+  }, [post]);
 
   const nextPhoto = (e: React.MouseEvent) => {
     e.preventDefault(); // prevent link navigation
@@ -98,12 +122,17 @@ const Post = ({ post, index }: PostProps) => {
                 </video>
               </div>
             ) : isGallery ? (
-              /* Gallery render */
-              <div className="gallery-wrapper">
+              /* РЕНДЕР ГАЛЕРЕИ СО СТАБИЛЬНЫМ РАЗМЕРОМ */
+              <div
+                className="gallery-wrapper"
+                // Применяем рассчитанное стабильное соотношение сторон
+                style={{ aspectRatio: stableAspectRatio }}
+              >
                 <img
                   src={galleryItems[currentImgIndex].url}
                   alt=""
-                  className="post-image"
+                  // Добавляем специальный класс для имиджей галереи
+                  className="post-image gallery-image"
                 />
                 {galleryItems.length > 1 && (
                   <>

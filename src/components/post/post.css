@@ -79,8 +79,18 @@
   position: relative;
   width: 100%;
   display: flex;
+  overflow: hidden;
   justify-content: center;
   background-color: #000;
+  align-items: center;
+  max-height: 75vh;
+}
+
+.gallery-image {
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
 .gallery-nav {

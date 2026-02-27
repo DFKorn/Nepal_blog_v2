@@ -33,7 +33,7 @@ export interface RedditPost {
   media_metadata?: Record<
     string,
     {
-      s: { u: string }; // Source
+      s: { u: string; x: number; y: number }; // Source
       p: Array<{ u: string; x: number; y: number }>; // Previews
     }
   >;
