@@ -1,0 +1,89 @@
+:root {
+  --color-background: #e5ebed;
+  --color-background-secondary: #ffffff;
+  --color-border: #e6e6e6;
+  --color-text-header: #1a1a1b;
+  --color-text-body: #1c1c1c;
+  
+
+  --box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+  --box-shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+
+
+
+  --margin-bottom-card: 10px;
+  --padding-primary: 16px;
+  --padding-mobile: 16px;
+  
+
+  --radius: 4px;
+  --radius-2: 8px;
+
+  --header-height: 64px;
+}
+
+*{
+  box-sizing: border-box;
+}
+
+html,
+body {
+  background: var(--color-background);
+  color: var(--color-text-body);
+  font-family: "Poppins", sans-serif;
+  box-sizing: border-box;
+}
+
+#root {
+  max-width: 1660px;
+  margin: auto;
+  box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  color: var(--color-text-header);
+}
+
+a {
+  color: inherit;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+p {
+  margin: 0;
+}
+
+ul{
+  padding: 0;
+}
+
+li {
+  list-style: none;
+  padding: 0;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  text-transform: none;
+  background-color: inherit;
+  color: inherit;
+  font: inherit;
+  margin: 0;
+  padding: 0;
+  border-width: 0;
+  overflow: visible;
+}
+
+.logo{
+  font-family: 'Permanent Marker', cursive;
+  font-size: 17px;
+}

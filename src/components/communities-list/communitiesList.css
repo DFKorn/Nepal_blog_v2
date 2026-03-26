@@ -1,0 +1,51 @@
+.communities-list{
+    margin-bottom: 12px;
+    margin-top: 12px;
+    padding-left: 32px;
+    width: 100%;
+}
+
+.community{
+    display: block;
+    padding-right: 4px;
+}
+
+.community-button{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 17px;
+    margin-bottom: 12px;
+    max-width: 100%;
+    display: inline-block;
+    padding-top: 4px; 
+    padding-right: 4px; 
+    padding-bottom: 4px; 
+
+}
+
+.community-avatar{
+    display: inline-block;
+    height: 24px;
+    margin-right: 8px;
+    vertical-align: middle;
+    width: 24px;
+}
+
+.community-icon-wrapper{
+    background-color: rgb(221, 189, 55);
+    background-repeat: no-repeat;
+    border-radius: 50%;
+    height: 100%;
+    position: relative;
+    width: 100%;
+}
+
+.community-icon{
+    display: block;
+    border-radius: 50%;
+    height: 100%;
+    object-position: 0 0;
+    position: absolute;
+    width: 100%;
+}
